@@ -22,7 +22,7 @@ defmodule AdventOfCode.Day8.Part2 do
   defp switch_instruction(cpu, line, {"nop", argument}) do
     CPU.change_instruction(cpu, line, {"jmp", argument})
   end
-  defp switch_instruction(cpu, _, {"acc", _}) do nil end
+  defp switch_instruction(_, _, {"acc", _}) do nil end
 
   defp run_until_repeat(nil, _) do nil end
   defp run_until_repeat(cpu, executed) do
