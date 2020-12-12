@@ -49,26 +49,14 @@ defmodule AdventOfCode.Day12.Part2 do
   defp rotate(0, way) do way end
   defp rotate(steps, {x, y}) do
     rotate(
-      to_zero(steps),
+      steps - sign(steps),
       {
-        sign(true, steps>=0, x>=0, y>=0) * abs(y),
-        sign(false, steps>=0, x>=0, y>=0) * abs(x)
+        sign(-1 * sign(steps) * sign(y)) * abs(y),
+        sign(     sign(steps) * sign(x)) * abs(x)
       }
     )
   end
 
-  defp to_zero(var) when var < 0 do var + 1 end
-  defp to_zero(var) do var - 1 end
-
-  # [++ > -+ > -- > +-] cycle rotation based on axis and direction
-  # defp sign(x?, r?, x+?, y+?)
-  defp sign(true, true, _, true) do -1 end    # x r _+ -> -
-  defp sign(true, true, _, false) do 1 end    # x r _- -> +
-  defp sign(true, false, _, true) do 1 end    # x l _+ -> +
-  defp sign(true, false, _, false) do -1 end  # x l _- -> -
-
-  defp sign(false, true, true, _) do 1 end     # y r +_ -> +
-  defp sign(false, true, false, _) do -1 end   # y r -_ -> -
-  defp sign(false, false, true, _) do -1 end   # y l +_ -> -
-  defp sign(false, false, false, _) do 1 end   # y l -_ -> +
+  defp sign(val) when val < 0 do -1 end
+  defp sign(_) do 1 end
 end
